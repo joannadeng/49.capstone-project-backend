@@ -1,0 +1,66 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "default": {},
+    "title": "Root Schema",
+    "required": [
+        "username",
+        "password",
+        "firstName",
+        "lastName",
+        "email",
+        "isAdmin"
+    ],
+    "properties": {
+        "username": {
+            "type": "string",
+            "title": "The username Schema",
+            "examples": [
+                "joanna"
+            ]
+        },
+        "password": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 20
+         },
+        "firstName": {
+            "type": "string",
+            "title": "The first_name Schema",
+            "examples": [
+                "Joanna"
+            ]
+        },
+        "lastName": {
+            "type": "string",
+            "title": "The last_name Schema",
+            "examples": [
+                "Deng"
+            ]
+        },
+        "email": {
+            "type": "string",
+            "title": "The email Schema",
+            "examples": [
+                "joanna@gmail.com"
+            ]
+        },
+        "isAdmin": {
+            "type": "boolean",
+            "default": false,
+            "title": "The is_Admin Schema",
+            "examples": [
+                false
+            ]
+        }
+    },
+    "examples": [{
+        "username": "Tony",
+        "password": "Tony",
+        "firstName": "Tony",
+        "lastName": "William",
+        "email": "Tony.William@gmail.com",
+        "isAdmin": false
+    }]
+}

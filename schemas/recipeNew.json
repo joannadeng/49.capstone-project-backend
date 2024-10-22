@@ -1,0 +1,43 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "default": {},
+    "title": "Root Schema",
+    "required": [
+        "name",
+        "ingredient",
+        "instruction"
+    ],
+    "properties": {
+        "name": {
+            "type": "string",
+            "default": "",
+            "title": "The name Schema",
+            "examples": [
+                "Fried egg"
+            ]
+        },
+        "ingredient": {
+            "type": "string",
+            "default": "",
+            "title": "The ingredient Schema",
+            "examples": [
+                "egg"
+            ]
+        },
+        "instruction": {
+            "type": "string",
+            "default": "",
+            "title": "The instruction Schema",
+            "examples": [
+                "cook egg with salt and olive oil"
+            ]
+        }
+    },
+    "examples": [{
+        "name": "Fried egg",
+        "ingredient": "egg",
+        "instruction": "cook egg with salt and olive oil"
+    }]
+}
