@@ -9,8 +9,7 @@
         "password",
         "firstName",
         "lastName",
-        "email",
-        "isAdmin"
+        "email"
     ],
     "properties": {
         "username": {

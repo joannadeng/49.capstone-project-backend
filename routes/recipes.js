@@ -36,7 +36,6 @@ router.get('/random',async function(req,res,next){
 router.get('/categories', async function(req,res,next) {
     try{
         const categories = await Recipe.getCategoriesList();
-        console.log(categories);
         return res.json({categories});
     }catch(err){
         return next(err);

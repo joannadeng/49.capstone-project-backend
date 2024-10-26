@@ -239,7 +239,7 @@ class User {
   static async savedRecipe(username, recipeId) { 
   
     const recipe = await Recipe.getById(recipeId);
-    console.log("meal:", recipe);
+   
     if(!recipe) throw new NotFoundError(`No meal:${recipeId}`);
 
     const {id, name, category, area} = recipe;
@@ -250,17 +250,8 @@ class User {
            WHERE username = $1`, [username]);
     const user = userCheck.rows[0];
 
-   if (!user) throw new NotFoundError(`No username: ${username}`);
+   if (!user) throw new NotFoundError(`User Not Found`);
 
-
-    const recipeCheck = await db.query(
-          `SELECT id
-          FROM savedRecipes
-          WHERE id = $1`, [recipeId]
-    )
-    const rec = recipeCheck.rows[0];
-
-    // if(rec) throw new BadRequestError(`You already added this recipe: ${recipeId}`)
 
     let result = await db.query(
       `INSERT INTO savedRecipes (id, name, category, area, username)
@@ -269,6 +260,8 @@ class User {
 
     return result.rows[0]
   }
+
+
 
   /**j Get an array of saved recipes */
 
@@ -320,7 +313,7 @@ class User {
        RETURNING name, ingredient, instruction username`,
        [name,ingredient,instruction,username],
     );
-    console.log("newRecipe:",result.rows[0])
+    
     const recipe = result.rows[0];
     return recipe;
   }

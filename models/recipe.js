@@ -17,7 +17,7 @@ class Recipe {
 
     static async getRandom(){
         const res = await axios.get(`${BASE_URL}/random.php`);
-        console.log(res.data);
+        // console.log(res.data);
         if(res){
           const meal = res.data.meals; //meal is an array with one element
           const {strMeal,strCategory,strArea,strInstructions} = meal[0];
@@ -39,7 +39,7 @@ class Recipe {
     static async getCategoriesList(){
         const res = await axios.get(`${BASE_URL}/list.php?c=list`);
         let catArr = res.data.meals;
-        console.log(catArr[0].strCategory)
+        // console.log(catArr[0].strCategory)
         let list = [];
         if(catArr){
             for(let i in catArr){
@@ -124,7 +124,7 @@ class Recipe {
         const res = await axios.get(`${BASE_URL}/filter.php?c=${category}`)
         const recipes = res.data.meals;
         if(!recipes) throw new BadRequestError();
-        console.log(recipes)
+        // console.log(recipes)
         return recipes;
     }
 
