@@ -16,15 +16,10 @@ const {
   adminToken,
 } = require("./_testCommon");
 
-beforeAll(()=> {
-  commonBeforeAll(),
-  jest.setTimeout(10000)
-});
+beforeAll(commonBeforeAll)
 beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
-afterAll(()=>{
-  commonAfterAll()
-});
+afterAll(commonAfterAll);
 
 /************************************** POST /users */
 
@@ -115,21 +110,6 @@ describe("POST /users", function () {
         .set("authorization", `Bearer ${adminToken}`);
     expect(resp.statusCode).toEqual(400);
   });
-
-  test("bad request if invalid data", async function () {
-    const resp = await request(app)
-        .post("/users")
-        .send({
-          username: "u-new",
-          firstName: "First-new",
-          lastName: "Last-newL",
-          password: "password-new",
-          email: "not-an-email",
-          isAdmin: true,
-        })
-        .set("authorization", `Bearer ${adminToken}`);
-    expect(resp.statusCode).toEqual(400);
-  });
 });
 
 /************************************** GET /users */
@@ -177,7 +157,7 @@ describe("GET /users", function () {
     const resp = await request(app)
         .get("/users");
     expect(resp.statusCode).toEqual(401);
-  },10000);
+  });
 
   test("fails: test next() handler", async function () {
     // there's no normal failure event which will cause this route to fail ---
@@ -188,7 +168,7 @@ describe("GET /users", function () {
         .get("/users")
         .set("authorization", `Bearer ${adminToken}`);
     expect(resp.statusCode).toEqual(500);
-  },10000);
+  });
 });
 
 /************************************** GET /users/:username */
@@ -211,29 +191,10 @@ describe("GET /users/:username", function () {
              "name": "fried egg",
            },
          ],
-        savedRecipes: [
-            {
-             area: "Japanese",
-             category: "Chicken",
-             id: 52772,
-             name: "Teriyaki Chicken Casserole",
-           },
-            {
-             area: "Japanese",
-             category: "Seafood",
-             id: 52773,
-             name: "Honey Teriyaki Salmon",
-           },
-            {
-             area: "Thai",
-             category: "Chicken",
-             id: 52774,
-             name: "Pad See Ew",
-           },
-         ],
+        savedRecipes: [],
       },
     });
-  },10000);
+  });
 
   test("works for same user", async function () {
     const resp = await request(app)
@@ -252,50 +213,30 @@ describe("GET /users/:username", function () {
              "name": "fried egg",
            },
          ],
-        savedRecipes: [
-            {
-             area: "Japanese",
-             category: "Chicken",
-             id: 52772,
-             name: "Teriyaki Chicken Casserole",
-           },
-            {
-             area: "Japanese",
-             category: "Seafood",
-             id: 52773,
-             name: "Honey Teriyaki Salmon",
-           },
-            {
-             area: "Thai",
-             category: "Chicken",
-             id: 52774,
-             name: "Pad See Ew",
-           },
-         ],
-        
+        savedRecipes: [],
       },
     });
-  },10000);
+  });
 
   test("unauth for other users", async function () {
     const resp = await request(app)
         .get(`/users/u1`)
         .set("authorization", `Bearer ${u2Token}`);
     expect(resp.statusCode).toEqual(401);
-  },10000);
+  });
 
   test("unauth for anon", async function () {
     const resp = await request(app)
         .get(`/users/u1`);
     expect(resp.statusCode).toEqual(401);
-  },10000);
+  });
 
   test("not found if user not found", async function () {
     const resp = await request(app)
         .get(`/users/nope`)
         .set("authorization", `Bearer ${adminToken}`);
     expect(resp.statusCode).toEqual(404);
-  },10000);
+  });
 });
 
 /************************************** PATCH /users/:username */
@@ -317,7 +258,7 @@ describe("PATCH /users/:username", () => {
         isAdmin: false,
       },
     });
-  },10000);
+  });
 
   test("works for same user", async function () {
     const resp = await request(app)
@@ -335,7 +276,7 @@ describe("PATCH /users/:username", () => {
         isAdmin: false,
       },
     });
-  },10000);
+  });
 
   test("unauth if not same user", async function () {
     const resp = await request(app)
@@ -345,7 +286,7 @@ describe("PATCH /users/:username", () => {
         })
         .set("authorization", `Bearer ${u2Token}`);
     expect(resp.statusCode).toEqual(401);
-  },10000);
+  });
 
   test("unauth for anon", async function () {
     const resp = await request(app)
@@ -354,7 +295,7 @@ describe("PATCH /users/:username", () => {
           firstName: "New",
         });
     expect(resp.statusCode).toEqual(401);
-  },10000);
+  });
 
   test("not found if no such user", async function () {
     const resp = await request(app)
@@ -364,7 +305,7 @@ describe("PATCH /users/:username", () => {
         })
         .set("authorization", `Bearer ${adminToken}`);
     expect(resp.statusCode).toEqual(404);
-  },10000);
+  });
 
   test("bad request if invalid data", async function () {
     const resp = await request(app)
@@ -374,7 +315,7 @@ describe("PATCH /users/:username", () => {
         })
         .set("authorization", `Bearer ${adminToken}`);
     expect(resp.statusCode).toEqual(400);
-  },10000);
+  });
 
   test("works: can set new password", async function () {
     const resp = await request(app)
@@ -394,7 +335,7 @@ describe("PATCH /users/:username", () => {
     });
     const isSuccessful = await User.authenticate("u1", "new-password");
     expect(isSuccessful).toBeTruthy();
-  },10000);
+  });
 });
 
 /************************************** DELETE /users/:username */

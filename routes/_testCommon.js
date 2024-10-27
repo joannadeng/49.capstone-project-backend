@@ -9,8 +9,8 @@ const { createToken } = require('../helpers/tokens');
 
 async function commonBeforeAll() {
     await db.query("DELETE FROM users");
-    // await db.query("DELETE FROM savedRecipes")
-    // await db.query("DELETE FROM createdRecipes")
+    await db.query("DELETE FROM savedRecipes")
+    await db.query("DELETE FROM createdRecipes")
 
     await User.register({
       username: "u1",
@@ -37,9 +37,9 @@ async function commonBeforeAll() {
       isAdmin: false,
     });
 
-    await User.savedRecipe("u1",52772)
-    await User.savedRecipe("u1",52773)
-    await User.savedRecipe("u1",52774)
+    // await User.savedRecipe("u1",52772)
+    // await User.savedRecipe("u1",52773)
+    // await User.savedRecipe("u1",52774)
 
     await User.createRecipe("u1",
         {

@@ -38,7 +38,7 @@ router.post("/", ensureAdmin, async function (req, res, next) {
 
     const user = await User.register(req.body);
     // const token = createToken(user);
-    return res.status(201).json({ user });
+    return res.status(201).json({ user});
   } catch (err) {
     return next(err);
   }
