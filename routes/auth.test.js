@@ -12,10 +12,7 @@ const {
   commonAfterAll,
 } = require("./_testCommon");
 
-beforeAll(()=> {
-  commonBeforeAll(),
-  jest.setTimeout(10000)
-});
+beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
 afterAll(commonAfterAll);
