@@ -39,12 +39,11 @@ class Recipe {
     static async getCategoriesList(){
         const res = await axios.get(`${BASE_URL}/list.php?c=list`);
         let catArr = res.data.meals;
-        // console.log(catArr[0].strCategory)
         let list = [];
         if(catArr){
-            for(let i in catArr){
-                list.push(catArr[i].strCategory)
-            }
+            catArr.map(cat => {
+                list.push(cat.strCategory)
+            })
             return list;
         }
         throw new BadRequestError();
