@@ -9,7 +9,8 @@ CREATE TABLE users (
 );
 
 CREATE TABLE savedRecipes (
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
+    recipeId INTEGER NOT NULL,
     name TEXT NOT NULL,
     category TEXT NOT NULL,
     area TEXT NOT NULL,

@@ -261,7 +261,7 @@ class User {
     const user = User.checkUser(username);
 
     let result = await db.query(
-      `INSERT INTO savedRecipes (id, name, category, area, username)
+      `INSERT INTO savedRecipes (recipeId, name, category, area, username)
        VALUES ($1, $2, $3, $4, $5)`,
     [id, name, category, area, username]);
 
@@ -293,7 +293,7 @@ class User {
     const result = await db.query(
       `DELETE 
        FROM savedRecipes
-       WHERE id = $1
+       WHERE recipeId = $1
        RETURNING id `, [recipeId]
     );
 
