@@ -230,6 +230,20 @@ class User {
     if (!user) throw new NotFoundError(`No user: ${username}`);
   }
 
+/**
+ * checkUser function
+ * receive a username, return a user
+ */
+  static async checkUser(username){
+    const userCheck = await db.query(
+          `SELECT username
+           FROM users
+           WHERE username = $1`, [username]);
+    const user = userCheck.rows[0];
+    if (!user) throw new NotFoundError(`User Not Found`);
+    return user;
+  }
+
   /** Save a recipe, update db, returns undefined.
    *
    * - username: user saves the recipe
@@ -244,14 +258,7 @@ class User {
 
     const {id, name, category, area} = recipe;
 
-    const userCheck = await db.query(
-          `SELECT username
-           FROM users
-           WHERE username = $1`, [username]);
-    const user = userCheck.rows[0];
-
-   if (!user) throw new NotFoundError(`User Not Found`);
-
+    const user = User.checkUser(username);
 
     let result = await db.query(
       `INSERT INTO savedRecipes (id, name, category, area, username)
@@ -322,14 +329,7 @@ class User {
 
   static async singleCreateRecipe(username, recipeId){
 
-    const userCheck = await db.query(
-          `SELECT username
-           FROM users
-           WHERE username = $1`, [username]);
-    const user = userCheck.rows[0];
-
-   if (!user) throw new NotFoundError(`No username: ${username}`);
-
+    User.checkUser(username);
 
     const recipeCheck = await db.query(
           `SELECT id, name, ingredient, instruction
