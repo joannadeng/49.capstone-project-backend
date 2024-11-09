@@ -78,20 +78,20 @@ class Recipe {
     */
 
 
-    static async getByName(name) {
-        const res = await axios.get(`${BASE_URL}/search.php?s=${name}`);
-        const meal = res.data.meals; //an array with one element ==> that single meal
-        if(!meal)throw new BadRequestError();
+    // static async getByName(name) {
+    //     const res = await axios.get(`${BASE_URL}/search.php?s=${name}`);
+    //     const meal = res.data.meals; //an array with one element ==> that single meal
+    //     if(!meal)throw new BadRequestError();
 
-        const {idMeal,strMeal,strCategory,strArea,strInstructions} = meal[0];
-        const targetMeal = {id:idMeal,
-                               name:strMeal,
-                              category:strCategory,
-                              area:strArea,
-                              instruction:strInstructions}
-        return targetMeal;
+    //     const {idMeal,strMeal,strCategory,strArea,strInstructions} = meal[0];
+    //     const targetMeal = {id:idMeal,
+    //                            name:strMeal,
+    //                           category:strCategory,
+    //                           area:strArea,
+    //                           instruction:strInstructions}
+    //     return targetMeal;
       
-    }
+    // }
 
     /** Get a specific recipe by Id;
      * 

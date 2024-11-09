@@ -95,15 +95,15 @@ router.get('/:id', async function (req,res,next) {
     }
 })
 
-router.get('/:name', async function(req,res,next) {
-    try{
-        const name = req.params.name;
-        const recipe = await Recipe.getByName(name);
-        return res.json({recipe});
-    }catch(err){
-        return next(err);
-    }
-})
+// router.get('/:name', async function(req,res,next) {
+//     try{
+//         const name = req.params.name;
+//         const recipe = await Recipe.getByName(name);
+//         return res.json({recipe});
+//     }catch(err){
+//         return next(err);
+//     }
+// })
 
 /** Get /recipes/categories/:category
  * 
