@@ -2,7 +2,7 @@
 
 const axios = require("axios")
 
-const {BadRequestError} = require('../expressError')
+const {BadRequestError, NotFoundError} = require('../expressError')
 
 const BASE_URL = "https://www.themealdb.com/api/json/v1/1"
 
@@ -90,7 +90,7 @@ class Recipe {
     static async getById(id) {
         const res = await axios.get(`${BASE_URL}/lookup.php?i=${id}`);
         const recipe = res.data.meals; //an array with one element ==> that single meal
-        if(!recipe) throw new BadRequestError();
+        if(!recipe) throw new NotFoundError();
 
          const {idMeal,strMeal,strCategory,strArea,strMealThumb,strInstructions} = recipe[0];
 
