@@ -61,22 +61,6 @@ router.get('/area', async function (req, res, next) {
     }
 })
 
-/** Get /recipes/:name 
- * 
- * search an recipe by name
- * 
- * return an object of a recipe
-*/
-
-// 名字和id查找就留一个，暂定留id
-// router.get('/:name', async function (req,res,next) {
-//     try{
-//         const meal = await Recipe.getByName(req.params.name);
-//         return res.json({meal});
-//     }catch(err){
-//         return next(err);
-//     }
-// })
 
 /** Get /recipes/meal/:id
  * 
@@ -95,15 +79,6 @@ router.get('/:id', async function (req,res,next) {
     }
 })
 
-// router.get('/:name', async function(req,res,next) {
-//     try{
-//         const name = req.params.name;
-//         const recipe = await Recipe.getByName(name);
-//         return res.json({recipe});
-//     }catch(err){
-//         return next(err);
-//     }
-// })
 
 /** Get /recipes/categories/:category
  * 
