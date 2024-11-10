@@ -13,6 +13,7 @@ const {
   commonAfterEach,
   commonAfterAll
 } = require("./_testCommon");
+// const { default: Ingredient } = require("../../free-recipe/src/Ingredient.js");
 
 beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);
@@ -141,7 +142,10 @@ describe("get", function () {
         lastName: "U1L",
         email: "u1@email.com",
         isAdmin: false,
-        createdRecipes:[],
+        createdRecipes:[{
+          id:expect.any(Number),
+          name:"fried rice"
+        }],
         savedRecipes:[]
       });
     });
@@ -155,6 +159,36 @@ describe("get", function () {
       }
     });
   });
+
+  /************************************* create recipe */
+
+describe("create recipe", function() {
+  const newRecipe = {
+    name:"stew beef",
+    ingredient:"beef",
+    instruction:"stew in pot with beef and onion for two hours"
+  };
+
+  test("works with valid user", async function() {
+    let recipe = await User.createRecipe('u2', newRecipe);
+    expect(recipe).toEqual({
+      name:"stew beef",
+      ingredient:"beef",
+      instruction:"stew in pot with beef and onion for two hours",
+      username:'u2'
+    })
+  });
+
+  test("invalid user", async function() {
+    let recipe;
+    const Operation = async () => {
+       recipe = await User.createRecipe('u4', newRecipe);
+       return recipe;
+    }
+     
+    await expect(Operation).rejects.toThrow( new NotFoundError("No user: u4"))
+  })
+})
 
 
   /************************************** update */

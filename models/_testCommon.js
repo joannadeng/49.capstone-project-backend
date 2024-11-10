@@ -19,6 +19,14 @@ async function commonBeforeAll() {
         await bcrypt.hash("password1", BCRYPT_WORK_FACTOR),
         await bcrypt.hash("password2", BCRYPT_WORK_FACTOR),
       ]);
+
+    await db.query(`
+      INSERT INTO createdRecipes(name,
+                                 ingredient,
+                                 instruction,
+                                 username)
+      VALUES('fried rice','rice','cook with high heat','u1')
+      RETURNING name`)
 }
  
 async function commonBeforeEach() {

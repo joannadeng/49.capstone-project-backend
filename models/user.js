@@ -326,12 +326,13 @@ class User {
    **/
 
   static async createRecipe(username, data){
-    const {name, ingredient,instruction} = data;
+    const user = await this.get(username);
 
+    const {name, ingredient,instruction} = data;
     let result = await db.query(
       `INSERT INTO createdRecipes (name, ingredient, instruction, username)
        VALUES($1, $2, $3, $4)
-       RETURNING name, ingredient, instruction username`,
+       RETURNING name, ingredient, instruction, username`,
        [name,ingredient,instruction,username],
     );
     

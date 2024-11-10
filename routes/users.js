@@ -176,8 +176,13 @@ router.post('/:username/createRecipe', ensureLoggedIn, async function (req, res,
       throw new BadRequestError(errs);
     }
 
-    const recipe = await User.createRecipe(req.params.username, req.body);
-    return res.json({recipe});
+    try{
+      const recipe = await User.createRecipe(req.params.username, req.body);
+      return res.json({recipe});
+    }catch(err){
+      return next(err)
+    }
+    
 
   }catch(err){
     return next(err)
