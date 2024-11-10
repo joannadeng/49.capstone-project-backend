@@ -276,7 +276,8 @@ class User {
 
     let result = await db.query(
       `INSERT INTO savedRecipes (recipeId, name, category, area, username)
-       VALUES ($1, $2, $3, $4, $5)`,
+       VALUES ($1, $2, $3, $4, $5)
+       RETURNING recipeId, name,category,area,username`,
     [recipeId, name, category, area, username]);
 
     return result.rows[0]
@@ -304,18 +305,12 @@ class User {
   static async removeSavedRecipe(id) {
 
     console.log("recipeId:",id);
-    const result = await db.query(
+    await db.query(
       `DELETE 
        FROM savedRecipes
        WHERE id = $1
        RETURNING id `, [id]
     );
-
-    // const recipe = result.rows[0];
-    // console.log(result)
-
-    // if(!recipe) throw new NotFoundError(`You haven't save this recipeId: ${id}`);
-      
   }
 
 

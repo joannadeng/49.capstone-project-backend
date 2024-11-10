@@ -179,14 +179,37 @@ describe("create recipe", function() {
     })
   });
 
-  test("invalid user", async function() {
-    let recipe;
+  test("not working with invalid user", async function() {
     const Operation = async () => {
-       recipe = await User.createRecipe('u4', newRecipe);
+       const recipe = await User.createRecipe('u4', newRecipe);
        return recipe;
     }
      
     await expect(Operation).rejects.toThrow( new NotFoundError("No user: u4"))
+  })
+})
+
+
+/********************************************* save a recipe */
+describe("save a recipe",  function() {
+  test("works", async function() {
+    const recipe = await User.savedRecipe('u1', 52772);
+    await expect (recipe).toEqual({
+      recipeid:52772, 
+      name:"Teriyaki Chicken Casserole", 
+      category:"Chicken", 
+      area:"Japanese", 
+      username:"u1"
+    })
+  });
+
+  test("invalid recipe", async function() {
+    const Operation = async() => {
+      const recipe = await User.savedRecipe('u1',11111);
+      return recipe;
+    }
+
+    await expect(Operation).rejects.toThrow(new NotFoundError(`Not Found`))
   })
 })
 
