@@ -210,6 +210,7 @@ router.delete("/:username/createRecipe/:id", ensureCorrectUserOrAdmin, async fun
  * */
 
 router.post("/:username/savedRecipe/:id", ensureLoggedIn, async function (req, res, next) {
+  //when save, use recipeId
   try {
     const recipeId = req.params.id;
     const recipe = await User.savedRecipe(req.params.username,recipeId);

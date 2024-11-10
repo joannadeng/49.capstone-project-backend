@@ -94,7 +94,7 @@ class Recipe {
 
          const {idMeal,strMeal,strCategory,strArea,strMealThumb,strInstructions} = recipe[0];
 
-         const targetRecipe = {id:idMeal,
+         const targetRecipe = {recipeId:idMeal,
                              name:strMeal,
                              category:strCategory,
                              area:strArea,

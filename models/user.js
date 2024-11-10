@@ -146,7 +146,7 @@ class User {
     if (!user) throw new NotFoundError(`No user: ${username}`);
 
     const savedRecipes = await db.query(
-      `SELECT s.id, s.name, s.category, s.area
+      `SELECT s.id, s.recipeId, s.name, s.category, s.area
       FROM savedRecipes AS s
       WHERE s.username = $1`,
       [username]
@@ -250,20 +250,34 @@ class User {
    * - recipeId:
    **/
 
-  static async savedRecipe(username, recipeId) { 
+  static async savedRecipe(username, recipeID) { 
   
-    const recipe = await Recipe.getById(recipeId);
+    // check if this recipe logic
+    const recipe = await Recipe.getById(recipeID);
    
-    if(!recipe) throw new NotFoundError(`No meal:${recipeId}`);
+    if(!recipe) throw new NotFoundError(`Not Found this recipe:${recipeID}`);
 
-    const {id, name, category, area} = recipe;
+    // check if this recipe already been saved
+    const savedList = await this.savedRecipeList(username);
 
-    const user = User.checkUser(username);
+     if(savedList.length > 0) {
+      const recipeIds = await savedList.map(recipe => recipe.recipeid)
+      const idSet = new Set(recipeIds);
+      const idArray = Array.from(idSet);
+      if(idArray.includes(+recipeID)){
+          console.log("repeated")
+         return;
+       }
+    }
+  
+    const {recipeId, name, category, area} = recipe;
+
+    User.checkUser(username);
 
     let result = await db.query(
       `INSERT INTO savedRecipes (recipeId, name, category, area, username)
        VALUES ($1, $2, $3, $4, $5)`,
-    [id, name, category, area, username]);
+    [recipeId, name, category, area, username]);
 
     return result.rows[0]
   }
@@ -287,20 +301,20 @@ class User {
 
   /** Delete a saved recipe from database; returns undefined. */
 
-  static async removeSavedRecipe(recipeId) {
+  static async removeSavedRecipe(id) {
 
-    console.log("recipeId:",recipeId);
+    console.log("recipeId:",id);
     const result = await db.query(
       `DELETE 
        FROM savedRecipes
-       WHERE recipeId = $1
-       RETURNING id `, [recipeId]
+       WHERE id = $1
+       RETURNING id `, [id]
     );
 
-    const recipe = result.rows[0];
-    console.log(result)
+    // const recipe = result.rows[0];
+    // console.log(result)
 
-    if(!recipe) throw new NotFoundError(`You haven't save this recipeId: ${recipeId}`);
+    // if(!recipe) throw new NotFoundError(`You haven't save this recipeId: ${id}`);
       
   }
 
